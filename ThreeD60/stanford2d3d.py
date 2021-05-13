@@ -7,6 +7,7 @@ from .common import _load_paths, _load_image, _filename_separator
 
 class Stanford2D3D(Dataset):
     def __init__(self, filename, placements, image_types):
+        print(filename)
         assert(os.path.exists(filename))
         super(Stanford2D3D, self).__init__()
         self.entries = _load_paths(filename, type(self).__name__, placements, image_types)
