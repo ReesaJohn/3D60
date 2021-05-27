@@ -68,12 +68,12 @@ def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=
 if __name__ == "__main__":
     os.chdir("..")
 
-    input_files = [r".\3D60\splits\3dv19\train.txt",
-                   r".\3D60\splits\3dv19\test_copy.txt",
-                   r".\3D60\splits\3dv19\val.txt"]
+    input_files = [r"./3D60/new_train.txt",
+                   r"./3D60/new_test.txt",
+                   r"./3D60/new_val.txt"]
 
     sets = ["train", "test", "val"]
-    output_file = r".\3D60\matterport_dataset.h5"
+    output_file = r"./3D60/matterport_dataset.h5"
 
     data_to_load = ["m3d"]
     # data_to_load = ["suncg", "m3d", "s2d3d"]
