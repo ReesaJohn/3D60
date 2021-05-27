@@ -7,12 +7,12 @@ import shutil
 import h5py
 import numpy as np
 
-PLACEMENT = "left_down"
 DEPTH_PATH = "depth_path"
 COLOR_PATH = "color_path"
 
+PLACEMENTS = [ThreeD60.Placements.CENTER, ThreeD60.Placements.RIGHT, ThreeD60.Placements.UP]
 
-def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=64):
+def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=1):
     with h5py.File(output_file, 'w') as hf:
         for i in range(len(input_files)):
 
@@ -24,7 +24,7 @@ def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=
 
             datasets = ThreeD60.get_datasets(input_files[i],
                                              datasets=data_to_load,
-                                             placements=[ThreeD60.Placements.CENTER],
+                                             placements=PLACEMENTS,
                                              image_types=[ThreeD60.ImageTypes.COLOR, ThreeD60.ImageTypes.DEPTH],
                                              longitudinal_rotation=False)
 
@@ -35,23 +35,25 @@ def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=
                                         pin_memory=False, num_workers=0)
 
             for it, b in enumerate(dataset_loader):
-                depth_paths = b[PLACEMENT][DEPTH_PATH]
-                color_paths = b[PLACEMENT][COLOR_PATH]
-                depth_batch_items = ThreeD60.extract_image(b, ThreeD60.Placements.CENTER,
-                                                           ThreeD60.ImageTypes.DEPTH)
 
-                color_batch_items = ThreeD60.extract_image(b, ThreeD60.Placements.CENTER,
-                                                           ThreeD60.ImageTypes.COLOR)
+                for placement in PLACEMENTS:
 
-                for j in range(0, len(depth_paths)):
-                    names.append(color_paths[j])
+                    color_paths = b[str(placement)][COLOR_PATH]
 
-                    cur_depth = depth_batch_items[j].cpu().numpy().transpose(1, 2, 0)
-                    cur_depth = (255 - cur_depth)
-                    depths.append(cur_depth)
+                    depth_batch_items = ThreeD60.extract_image(b, placement, ThreeD60.ImageTypes.DEPTH)
 
-                    cur_color = color_batch_items[j].cpu().numpy().transpose(1, 2, 0)
-                    colors.append(cur_color)
+                    color_batch_items = ThreeD60.extract_image(b, placement,
+                                                               ThreeD60.ImageTypes.COLOR)
+
+                    for j in range(0, len(color_paths)):
+                        names.append(color_paths[j])
+
+                        cur_depth = depth_batch_items[j].cpu().numpy().transpose(1, 2, 0)
+                        cur_depth = (255 - cur_depth)
+                        depths.append(cur_depth)
+
+                        cur_color = color_batch_items[j].cpu().numpy().transpose(1, 2, 0)
+                        colors.append(cur_color)
 
             names = np.array(names, dtype=object)
             colors = np.array(colors)
@@ -64,18 +66,18 @@ def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=
 
 
 if __name__ == "__main__":
-    os.chdir("")
+    os.chdir("..")
 
     input_files = [r".\3D60\splits\3dv19\train.txt",
                    r".\3D60\splits\3dv19\test_copy.txt",
                    r".\3D60\splits\3dv19\val.txt"]
 
     sets = ["train", "test", "val"]
-    output_file = r".\3D60\dataset_no_suncg.h5"
+    output_file = r".\3D60\matterport_dataset.h5"
 
-    data_to_load = ["m3d", "s2d3d"]
+    data_to_load = ["m3d"]
     # data_to_load = ["suncg", "m3d", "s2d3d"]
 
-    create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=64)
+    create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=1)
 
     print("commpleted")
