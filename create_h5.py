@@ -10,6 +10,7 @@ import numpy as np
 DEPTH_PATH = "depth_path"
 COLOR_PATH = "color_path"
 
+# Type of picture positions we are using for generating our dataset. If you use more than one, batch_size must be 1
 PLACEMENTS = [ThreeD60.Placements.CENTER, ThreeD60.Placements.RIGHT, ThreeD60.Placements.UP]
 
 def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=1):
@@ -66,18 +67,26 @@ def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=
 
 
 if __name__ == "__main__":
+    # need to change directories to get relative path names on the input files to work
+    # this code assumes that the image and exr files are located one directory above
     os.chdir("..")
-
-    input_files = [r"./3D60/new_train.txt",
-                   r"./3D60/new_test.txt",
-                   r"./3D60/new_val.txt"]
-
+    # files containing the names of training, testing, and data splits
+    # other files are located in ./3D60/splits/3dv19/
+    # the difference between new and the original .txt is that one is that new uses / for unix
+    # and the original files uses \ because it was designed for Windows machines.
+    # please format the files similar to these files if you want to use this for other code
+    input_files = [r"./3D60/splits/3dv19/new_train.txt",
+                   r"./3D60/splits/3dv19/new_test.txt",
+                   r"./3D60/splits/3dv19/new_val.txt"]
+    # the sets directly correspond to the input files' order
     sets = ["train", "test", "val"]
+    # name of the output file
     output_file = r"./3D60/matterport_dataset.h5"
-
+    # the dataset we are using
     data_to_load = ["m3d"]
+    # Sun, Matterport, #Standord are the only datasets we can use
     # data_to_load = ["suncg", "m3d", "s2d3d"]
-
+    # batch size must be 1 if more than one placement in the constant PLACEMENTS array at the top of the file
     create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=1)
 
-    print("commpleted")
+    print("completed")
