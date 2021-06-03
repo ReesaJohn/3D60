@@ -1,3 +1,28 @@
+# create_h5.py
+
+An easily modifiable python script to generate an h5 file out of the Matterport, Stanford, and Sun datasets.
+Make sure your image/exr directories are one file level above the script. If it isn't modify the script. 
+If you are creating a custom .txt file for splitting the data, please keep in mind that the script changes directories to one file level above.
+The comments within the file should help guide you to create the h5 file structure you want.
+
+Currently the code as is will only use the Matterport dataset that it assumes is one file level above to create an h5 structured like so:
+
+train
+- image_paths: relational paths of the color images (as listed in the text files used to determine the splits)
+- colors: numpy array of the color image (scaled 0-1, RGB formatted)
+- depths: numpy array of the depth maps (mostly scaled 0 to 255; large numbers correlate to closer areas; contains large negative numbers around some reflective surfaces)
+test
+- image_paths: relational paths of the color images (as listed in the text files used to determine the splits)
+- colors: numpy array of the color image (scaled 0-1, RGB formatted)
+- depths: numpy array of the depth maps (mostly scaled 0 to 255; large numbers correlate to closer areas; contains large negative numbers around some reflective surfaces)
+val
+- image_paths: relational paths of the color images (as listed in the text files used to determine the splits)
+- colors: numpy array of the color image (scaled 0-1, RGB formatted)
+- depths: numpy array of the depth maps (mostly scaled 0 to 255; large numbers correlate to closer areas; contains large negative numbers around some reflective surfaces)
+
+Additionally every group of 3 images correspond to the same the area where the first image is taken from a center-left to the second and third images, the second image is taken 0.26 meters to the right of the first image, and the third image is taken 0.26 meters above the first image. However every group of three images is a randomly ordered.
+
+
 [![OmniDepth](http://img.shields.io/badge/OmniDepth-arxiv.1807.09620-critical.svg?style=plastic)](https://arxiv.org/pdf/1807.09620.pdf)
 [![Conference](http://img.shields.io/badge/ECCV-2018-blue.svg?style=plastic)](https://eccv2018.org/)
 [![Project Page](http://img.shields.io/badge/Project-Page-blueviolet.svg?style=plastic)](https://vcl3d.github.io/3D60/)
