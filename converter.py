@@ -1,7 +1,10 @@
 import os
 
+# the file that you want to convert
 path = r"C:\Users\reesa\Desktop\TESTINGIMG\3D60\splits\3dv19\test_copy.txt"
+# the name of the converted file
 output_path = r".\new_test.txt"
+
 if __name__ == "__main__":
     path.replace(os.sep, '/')
     newLines = []
