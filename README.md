@@ -1,6 +1,15 @@
 # create_h5.py
 
-An easily modifiable python script to generate an h5 file out of the Matterport, Stanford, and Sun datasets.
+An easily modifiable python script to generate an h5 file out of the Matterport, Stanford, and Sun datasets. 
+
+Make sure to install the following libraries before running this file.
+
+- [OpenCV](https://pypi.org/project/opencv-python/)
+- [numpy](https://numpy.org/)
+- [easydict](https://pypi.org/project/easydict/)
+- [matplotlib](https://matplotlib.org/)
+- [torchvision](https://pypi.org/project/torchvision/)
+
 Make sure your image/exr directories are one file level above the script. If it isn't modify the script. 
 If you are creating a custom .txt file for splitting the data, please keep in mind that the script changes directories to one file level above.
 The comments within the file should help guide you to create the h5 file structure you want.
