@@ -22,6 +22,8 @@ Currently the code as is will only use the Matterport dataset that it assumes is
 
 Additionally every group of 3 images correspond to the same the area where the first image is taken from a center-left to the second and third images, the second image is taken 0.26 meters to the right of the first image, and the third image is taken 0.26 meters above the first image. However every group of three images is a randomly ordered.
 
+To modify any behavior of this code, please look at the file and read its comments.
+
 
 [![OmniDepth](http://img.shields.io/badge/OmniDepth-arxiv.1807.09620-critical.svg?style=plastic)](https://arxiv.org/pdf/1807.09620.pdf)
 [![Conference](http://img.shields.io/badge/ECCV-2018-blue.svg?style=plastic)](https://eccv2018.org/)
@@ -34,6 +36,9 @@ Additionally every group of 3 images correspond to the same the area where the f
 [![Surface Regression](http://img.shields.io/badge/SurfaceRegression-arxiv.1909.07043-critical.svg?style=plastic)](https://arxiv.org/pdf/1909.07043.pdf)
 [![Conference](http://img.shields.io/badge/3DV-2019-blue.svg?style=plastic)](http://3dv19.gel.ulaval.ca/)
 [![Project Page](http://img.shields.io/badge/Project-Page-blueviolet.svg?style=plastic)](https://vcl3d.github.io/HyperSphereSurfaceRegression/)
+
+# converter.py
+A very simple script to convert the Windows' slashes ('\') to that of Unix's ('/'). Please note that the script assumes to run on a Windows system so modify accordingly. Please modify the file's `path` and `output_path` variables to change which files it wants to convert.
 
 # 3D60 Toolset
 A set of tools for working with the [3D60 dataset](https://vcl3d.github.io/3D60/):
