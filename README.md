@@ -9,7 +9,7 @@ Make sure to install the following libraries before running this file.
 - [easydict](https://pypi.org/project/easydict/)
 - [matplotlib](https://matplotlib.org/)
 - [torchvision](https://pypi.org/project/torchvision/)
-
+- [h5py](https://pypi.org/project/h5py/)
 Make sure your image/exr directories are one file level above the script. If it isn't modify the script. 
 If you are creating a custom .txt file for splitting the data, please keep in mind that the script changes directories to one file level above.
 The comments within the file should help guide you to create the h5 file structure you want.
