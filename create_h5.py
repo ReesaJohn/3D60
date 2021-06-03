@@ -32,7 +32,7 @@ def create_numpy_array(output_file, input_files, sets, data_to_load, batch_size=
             print("Loaded %d samples." % len(datasets))
 
             dataset_loader = DataLoader(datasets, batch_size=batch_size,
-                                        shuffle=False,
+                                        shuffle=True,
                                         pin_memory=False, num_workers=0)
 
             for it, b in enumerate(dataset_loader):
